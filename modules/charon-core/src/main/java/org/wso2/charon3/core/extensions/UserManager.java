@@ -239,14 +239,28 @@ public interface UserManager {
         throw new NotImplementedException();
     }
 
+    /**
+     * Return Custom schema.
+     * @return Custom schema.
+     * @throws CharonException
+     * @throws NotImplementedException
+     * @throws BadRequestException
+     */
     default AttributeSchema getCustomUserSchemaExtension() throws CharonException, NotImplementedException,
             BadRequestException {
 
         throw new NotImplementedException();
     }
 
-
-    default List<Attribute> getCustomUserSchema() throws CharonException, NotImplementedException,
+    /**
+     * Returns list of attributes in custom schema.
+     *
+     * @return List of attributes in custom schema.
+     * @throws CharonException
+     * @throws NotImplementedException
+     * @throws BadRequestException
+     */
+    default List<Attribute> getCustomUserSchemaAttributes() throws CharonException, NotImplementedException,
             BadRequestException {
 
         throw new NotImplementedException();

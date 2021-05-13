@@ -78,7 +78,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
         try {
             List<Attribute> userSchemaAttributes = userManager.getUserSchema();
             List<Attribute> userEnterpriseSchemaAttributes = userManager.getEnterpriseUserSchema();
-            List<Attribute> userCustomSchemaAttributes = userManager.getCustomUserSchema();
+            List<Attribute> userCustomSchemaAttributes = userManager.getCustomUserSchemaAttributes();
 
             Map<String, List<Attribute>> schemas = new HashMap<>();
             if (StringUtils.isBlank(id)) {
