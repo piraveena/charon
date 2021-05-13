@@ -27,6 +27,7 @@ import org.wso2.charon3.core.exceptions.NotImplementedException;
 import org.wso2.charon3.core.extensions.UserManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,14 +50,10 @@ public class SCIMResourceSchemaManager {
      */
     public SCIMResourceTypeSchema getUserResourceSchema() {
 
-
-        AttributeSchema enterpriseSchemaExtension = SCIMUserSchemaExtensionBuilder.getInstance().getExtensionSchema();
-        if (enterpriseSchemaExtension != null) {
-            List<String> schemas = new ArrayList<>();
-            schemas.add(SCIMConstants.USER_CORE_SCHEMA_URI);
-            schemas.add(enterpriseSchemaExtension.getURI());
+        AttributeSchema schemaExtension = SCIMUserSchemaExtensionBuilder.getInstance().getExtensionSchema();
+        if (schemaExtension != null) {
             return SCIMResourceTypeSchema.createSCIMResourceSchema(
-                    schemas,
+                    new ArrayList<String>(Arrays.asList(SCIMConstants.USER_CORE_SCHEMA_URI, schemaExtension.getURI())),
                     SCIMSchemaDefinitions.ID, SCIMSchemaDefinitions.EXTERNAL_ID, SCIMSchemaDefinitions.META,
                     SCIMSchemaDefinitions.SCIMUserSchemaDefinition.USERNAME,
                     SCIMSchemaDefinitions.SCIMUserSchemaDefinition.NAME,
@@ -79,7 +76,7 @@ public class SCIMResourceSchemaManager {
                     SCIMSchemaDefinitions.SCIMUserSchemaDefinition.ENTITLEMENTS,
                     SCIMSchemaDefinitions.SCIMUserSchemaDefinition.ROLES,
                     SCIMSchemaDefinitions.SCIMUserSchemaDefinition.X509CERTIFICATES,
-                    enterpriseSchemaExtension);
+                    schemaExtension);
         }
         return SCIMSchemaDefinitions.SCIM_USER_SCHEMA;
     }

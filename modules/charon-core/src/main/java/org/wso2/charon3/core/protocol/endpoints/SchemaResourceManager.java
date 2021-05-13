@@ -116,7 +116,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
      * @throws CharonException
      * @throws NotFoundException
      */
-    public SCIMResponse buildSchemasResponse(Map<String, List<Attribute>> schemas) throws CharonException,
+    private SCIMResponse buildSchemasResponse(Map<String, List<Attribute>> schemas) throws CharonException,
             NotFoundException {
 
         String schemaResponseBody = buildSchemasResponseBody(schemas).toString();
@@ -131,7 +131,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
      * @return SCIM schemas config json representation.
      * @throws CharonException
      */
-    public JSONArray buildSchemasResponseBody(Map<String, List<Attribute>> schemas) throws CharonException {
+    private JSONArray buildSchemasResponseBody(Map<String, List<Attribute>> schemas) throws CharonException {
 
         JSONArray rootObject = new JSONArray();
         if (schemas.get(USER_CORE_SCHEMA_URI) != null) {
@@ -156,7 +156,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
      * @return JSON object of enterprise user schema
      * @throws CharonException
      */
-    public JSONObject buildEnterpriseUserSchema(List<Attribute> enterpriseUserSchemaList) throws CharonException {
+    private JSONObject buildEnterpriseUserSchema(List<Attribute> enterpriseUserSchemaList) throws CharonException {
 
         try {
             JSONEncoder encoder = getEncoder();
@@ -175,7 +175,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
         }
     }
 
-    public JSONObject buildCustomUserSchema(List<Attribute> customUserSchemaList) throws CharonException {
+    private JSONObject buildCustomUserSchema(List<Attribute> customUserSchemaList) throws CharonException {
 
         try {
             JSONEncoder encoder = getEncoder();
@@ -193,7 +193,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
         }
     }
 
-    public JSONObject buildUserSchema(List<Attribute> userSchemaAttributeList) throws CharonException {
+    private JSONObject buildUserSchema(List<Attribute> userSchemaAttributeList) throws CharonException {
 
         try {
             JSONEncoder encoder = getEncoder();
@@ -211,7 +211,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
         }
     }
 
-    public JSONArray buildSchemaAttributeArray(List<Attribute> schemaAttributeList, JSONEncoder encoder)
+    private JSONArray buildSchemaAttributeArray(List<Attribute> schemaAttributeList, JSONEncoder encoder)
             throws JSONException {
 
         JSONArray schemaAttributeArray = new JSONArray();
@@ -233,7 +233,7 @@ public class SchemaResourceManager extends AbstractResourceManager {
         return schemaAttributeArray;
     }
 
-    public Map<String, String> getResponseHeaders() throws NotFoundException {
+    private Map<String, String> getResponseHeaders() throws NotFoundException {
 
         Map<String, String> responseHeaders;
         responseHeaders = new HashMap<>();
