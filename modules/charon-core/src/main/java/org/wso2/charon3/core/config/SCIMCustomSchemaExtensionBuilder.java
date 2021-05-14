@@ -37,35 +37,27 @@ public class SCIMCustomSchemaExtensionBuilder extends ExtensionBuilder {
     private static SCIMCustomSchemaExtensionBuilder customSchemaExtensionBuilder =
             new SCIMCustomSchemaExtensionBuilder();
     private Map<String, AttributeSchema> attributeSchemaConfig;
-    // This contains the map of tenant and custom schema.
-    private Map<Integer, AttributeSchema> extensionSchemaForTenant = new HashMap<>();
+    private String rootAttributeURI;
 
     public static SCIMCustomSchemaExtensionBuilder getInstance() {
 
         return customSchemaExtensionBuilder;
     }
 
-    public AttributeSchema getExtensionSchema(int tenantId) {
-
-        return extensionSchemaForTenant.get(tenantId);
-    }
-
-    public Map<Integer, AttributeSchema> getExtensionSchemaForAllTenant() {
-
-        return extensionSchemaForTenant;
-    }
-
     @Override
     public String getURI() {
 
+        if (rootAttributeURI != null) {
+            return rootAttributeURI;
+        }
         return CUSTOM_USER_SCHEMA_URI;
     }
 
-    public void buildUserCustomSchemaExtension(int tenantId, List<SCIMCustomAttribute> schemaConfigurations) throws
-            CharonException, InternalErrorException {
+    public AttributeSchema buildUserCustomSchemaExtension(List<SCIMCustomAttribute> attributes,
+                                               String schemaUri) throws CharonException, InternalErrorException {
 
         attributeSchemaConfig = new HashMap<>();
-        readConfiguration(schemaConfigurations);
+        readConfiguration(attributes);
         for (Map.Entry<String, ExtensionAttributeSchemaConfig> attributeSchemaConfig :
                 customConfig.entrySet()) {
             // if there are no children its a simple attribute, build it
@@ -76,8 +68,9 @@ public class SCIMCustomSchemaExtensionBuilder extends ExtensionBuilder {
                 buildComplexAttributeSchema(attributeSchemaConfig.getValue(), this.attributeSchemaConfig, customConfig);
             }
         }
-        // Now get the extension schema for tenant.
-        extensionSchemaForTenant.put(tenantId, attributeSchemaConfig.get(getURI()));
+        this.rootAttributeURI = schemaUri;
+        // Now get the extension schema.
+        return  attributeSchemaConfig.get(schemaUri);
     }
 
     private void readConfiguration(List<SCIMCustomAttribute> schemaConfigurations) throws CharonException {
